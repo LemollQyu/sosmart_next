@@ -4,6 +4,7 @@ import PostRegistrasi from '@/api/registrasi';
 import axios from 'axios';
  import Link from 'next/link'
  import { useEffect, useState } from "react"
+ import { useRouter } from "next/navigation"
 
 
 
@@ -23,6 +24,9 @@ import axios from 'axios';
     const [ password, setPassword ] = useState("");
     const [ phone, setPhone ] = useState("");
     const [ resError, setResError ] = useState<any>(null);
+    const [ resData, setResData ] = useState<any>(null);
+
+    const router = useRouter();
 
     
 
@@ -41,6 +45,13 @@ import axios from 'axios';
             })
             const dataResponse: RegisterResponse = response.data
             console.log(dataResponse)
+            setResData(dataResponse);
+
+            if(dataResponse.code == 201) {
+                router.push('/login');
+			    router.refresh();
+            }
+
         } catch (error: any) {
             console.log(error.response)
             setResError(error.response.data);
@@ -48,10 +59,12 @@ import axios from 'axios';
             
         }
 
-
+       
 
 
     }
+
+    // console.log(resData.code);
 
     useEffect(() => {
         console.log(resError);
@@ -66,7 +79,7 @@ import axios from 'axios';
 			<div className=" h-5 flex items-center">
 				<span className="inline-block w-[90px] h-[2px] bg-black"></span>
 			</div>
-			<p className="text-sm text-red-400 font-bold">Less</p>
+			
 			</>
 			)
 		} else if ( password.length >= 5 && password.length <= 7 ){
@@ -76,7 +89,7 @@ import axios from 'axios';
 				<span className="inline-block w-[90px] h-[2px] bg-black"></span>
 				<span className="inline-block w-[90px] h-[2px] bg-black"></span>
 			</div>
-			<p className="text-sm text-yellow-400 font-bold">Enough</p>
+		
 			</>
 			)
 		} else if (password.length >= 8) {
@@ -87,7 +100,7 @@ import axios from 'axios';
 				<span className="inline-block w-[90px] h-[2px] bg-black"></span>
 				<span className="inline-block w-[90px] h-[2px] bg-black"></span>
 			</div>
-			<p className="text-sm text-blue-400 font-bold">Good</p>
+		
 			</>
 			)
 		}
@@ -111,7 +124,7 @@ import axios from 'axios';
                                type="text" className="font-bold w-full outline-none h-full bg-[#f1f1f1]"/>
                     </div>
 
-                    
+                    <span className="text-red-400 text-xs underline">{resError && resError.message?.username?.[0] !== undefined ? resError.message.username[0] : "" }</span>
 
                     <div className="border w-[312px] h-[47px] rounded-lg px-2 pt-4 bg-[#f1f1f1] relative">
                         <span className="absolute text-xs left-2 top-0">No Telepon</span>
@@ -119,6 +132,9 @@ import axios from 'axios';
 						       onChange={(e) => setPhone(e.target.value)}
                                type="text" className="font-bold w-full outline-none h-full bg-[#f1f1f1]"/>
                     </div>
+
+                    <span className="text-red-400 text-xs underline">{resError && resError.message?.phone?.[0] !== undefined ? resError.message.phone[0] : "" }</span>
+
                     <div className="border w-[312px] h-[47px] rounded-lg px-2 pt-4 bg-[#f1f1f1] relative">
                         <span className="absolute text-xs left-2 top-0">Email</span>
                         <input value={email}
@@ -138,6 +154,7 @@ import axios from 'axios';
 
                         <PassSpan />
                     </div>
+                    <span className="text-red-400 text-xs underline">{resError && resError.message?.password?.[0] !== undefined ? resError.message.password[0] : "" }</span>
                     
                     <p className="text-sm font-extralight">Kata sandi minimal 5 karakter</p>
 
@@ -151,10 +168,10 @@ import axios from 'axios';
 
                 <div className="mx-auto gap-[20px] flex">
                     <div className="w-[44px] h-[44px] rounded-full bg-[#dfdfdf] flex justify-center items-center">
-                        <img src="../../public/wrapper.png"/>
+                        <img src="../../wrapper.png"/>
                     </div>
                     <div className="w-[44px] h-[44px] rounded-full bg-[#dfdfdf] flex justify-center items-center">
-                        <img src="../../public/mobile.png" />
+                        <img src="../../mobile.png" />
 
                     </div>
                 </div>
