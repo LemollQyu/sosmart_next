@@ -5,10 +5,11 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import NavBack from "../layout/layoutNavigasi"
 
-const LupaPassword = (e: React.FormEvent) => {
+const SandiBaru = (e: React.FormEvent) => {
     const router = useRouter();
 
-    const [ email,setEmail ] = useState<string>("");
+    const [ pass,setPass ] = useState<string>("");
+    const [ passKonf,setKonfPass ] = useState<string>("");
     
 
 
@@ -44,11 +45,22 @@ const LupaPassword = (e: React.FormEvent) => {
 
             <div className=" w-full h-[53px] rounded-lg px-2 pt-4 bg-[#f1f1f1] relative ">
 
-                <span className="absolute text-xs left-2 top-0">Nomor ponsel atau email</span>
+                <span className="absolute text-xs left-2 top-0">Password baru</span>
                 <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="text"
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
+                type="password"
+                className="font-bold w-full outline-none h-full bg-[#f1f1f1]"
+                />
+            </div>
+
+            <div className=" w-full h-[53px] rounded-lg px-2 pt-4 bg-[#f1f1f1] relative ">
+
+                <span className="absolute text-xs left-2 top-0">Konfirmasi password baru</span>
+                <input
+                value={passKonf}
+                onChange={(e) => setKonfPass(e.target.value)}
+                type="password"
                 className="font-bold w-full outline-none h-full bg-[#f1f1f1]"
                 />
             </div>
@@ -84,4 +96,4 @@ const LupaPassword = (e: React.FormEvent) => {
 }
 
 
-export default LupaPassword;
+export default SandiBaru;
