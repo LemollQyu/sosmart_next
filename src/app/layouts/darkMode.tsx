@@ -33,7 +33,7 @@ export default function Home() {
         onClick={toggleDarkMode}
         className="absolute bottom-0 left-0 z-50 px-4 py-2 rounded-full text-white bg-blue-500 dark:bg-yellow-500"
       >
-        {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        {darkMode ? 'Light' : 'Dark'}
       </button>
 
   );
