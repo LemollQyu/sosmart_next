@@ -31,13 +31,16 @@ const Login = () => {
             >
                 Masuk
             </button>
-            <p className="text-center font-bold text-blue-500">
+            <div className="flex justify-center space-x-4">
+            <p className="text-center">
                 Lupa kata sandi?
-                <Link href={"/password"} className="font-bold text-blue-500">Klik di sini</Link>
+                <span className="font-bold text-blue-500"
+                ><Link href={"/lupa-password"}> Klik disini </Link></span>
             </p>
+            </div>
             </form>
 
-            <div className="flex justify-center space-x-4">
+            <div className="flex justify-center space-x-2">
             <p className="text-center">
                 Belum punya akun?
                 <span className="font-bold text-blue-500"
