@@ -29,9 +29,9 @@ const Home = () => {
 
 
   <div className="mx-auto gap-[20px] flex">
-  <div className="w-[44px] h-[44px] rounded-full bg-[#dfdfdf] flex justify-center items-center">
+  <Link href={`${process.env.NEXT_PUBLIC_BASE_API_URL}/oauth-google`} className="w-[44px] h-[44px] rounded-full bg-[#dfdfdf] flex justify-center items-center">
       <img src="../wrapper.png"/>
-  </div>
+  </Link>
   <div className="w-[44px] h-[44px] rounded-full bg-[#dfdfdf] flex justify-center items-center">
     <img src="../mobile.png" />
 

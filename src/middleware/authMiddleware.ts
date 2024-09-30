@@ -12,17 +12,17 @@ export default function authMiddleware(
 ) {
   return (req: NextRequest, next: NextFetchEvent) => {
     const pathname = req.nextUrl.pathname;
-    const accessToken = req.cookies.get("access-token")?.value;
+    const accessToken = req.cookies.get("acces-token")?.value;
     const refreshToken = req.cookies.get("refresh-token")?.value;
 
     // Jika user sudah login dan mencoba akses halaman login, redirect ke halaman lain
     if (
       accessToken &&
       refreshToken &&
-      restrictedIfLoggedIn.includes(pathname)
+      restrictedIfLoggedIn.some((prefix) => pathname.startsWith(prefix))
     ) {
       console.log("User sudah login, redirect ke halaman lain...");
-      return NextResponse.redirect(new URL("/dashboard", req.url));
+      return NextResponse.redirect(new URL("/", req.url));
     }
 
     // Cek jika route memerlukan autentikasi
@@ -33,7 +33,7 @@ export default function authMiddleware(
       // Jika tidak ada token, redirect ke halaman login
       if (!accessToken || !refreshToken) {
         console.log("Redirecting to login...");
-        return NextResponse.redirect(new URL("/authentikasi/login", req.url));
+        return NextResponse.redirect(new URL("/authentikasi", req.url));
       }
     }
 
