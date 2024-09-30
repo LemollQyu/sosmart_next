@@ -1,28 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
+import authMiddleware from "./middleware/AuthMiddleware";
 
 
 export function middleware(req: NextRequest) {
-    // console.log('request', req.nextUrl.pathname)
-
-    // if(req.nextUrl.pathname.startsWith('/')){
-
-    //     console.log("halaman home-page")
-
-    //     return NextResponse.next();
-    // }
-
-
-    const cookie = req.cookies.get('bareer');
-
-    console.log('cookie', cookie)
-
-
-    return NextResponse.next();
-
-    
-    
+    const res = NextResponse.next();
+    return res;
 }
 
-export const config = {
-    matcher: '/',
-}
+export default authMiddleware(middleware, ['/dashboard'])
+
+// export function middleware(request: NextRequest) {
+//     if (request.nextUrl.pathname.startsWith('/about')) {
+//       return NextResponse.redirect(new URL('/', request.url))
+//     }
+   
+//     if (request.nextUrl.pathname.startsWith('/dashboard')) {
+//       return NextResponse.rewrite(new URL('/dashboard/user', request.url))
+//     }
+//   }

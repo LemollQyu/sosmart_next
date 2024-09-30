@@ -41,7 +41,7 @@ const LupaPassword = (e: React.FormEvent) => {
             
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
-            <div className="border w-[312px] h-[53px] rounded-lg px-2 pt-4 bg-[#f1f1f1] relative mx-auto">
+            <div className="border w-full h-[53px] rounded-lg px-2 pt-4 bg-[#f1f1f1] relative mx-auto">
 
                 <span className="absolute text-xs left-2 top-0">Nomor ponsel atau email</span>
                 <input

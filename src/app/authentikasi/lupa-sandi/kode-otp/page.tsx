@@ -1,60 +1,87 @@
 "use client"
+import { useState, useRef, ChangeEvent, KeyboardEvent } from "react";
+import NavBack from "../../layout/layoutNavigasi"
+import Link from "next/link";
 
-import {useState} from "react"
+export default function OtpInput() {
+  const [otp, setOtp] = useState<string[]>(new Array(4).fill(""));
+  
+  // Inisialisasi dengan tipe yang lebih eksplisit
+  const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
-const KodeOTP = () => {
+  const handleChange = (element: ChangeEvent<HTMLInputElement>, index: number) => {
+    if (isNaN(Number(element.target.value))) return;
 
-    const handleSubmit = (e:any) => {
+    const newOtp = [...otp];
+    newOtp[index] = element.target.value;
+    setOtp(newOtp);
 
-
+    // Pindah ke input berikutnya setelah input terisi
+    if (element.target.value !== "" && index < 3) {
+      inputRefs.current[index + 1]?.focus();
     }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+  };
+
+  function handleAction(event: React.FormEvent): void {
+    event.preventDefault();
+
+    const data = {otp};
+
+    console.log(data);
 
 
-    return (
-    <>
+  }
 
-<div
-            className="auth page flex flex-col gap-12 font-nunito bottom-16 absolute left-1/2 -translate-x-1/2  top-24"
-        >
-
-       
-            <div className="flex flex-col gap-2">
-
-                <h1 className="text-xl text-center font-nunitoBold">Verifikasi OTP</h1>
-                <span className="w-full text-center text-md px-10"><p className="font-nunitoLight">Masukan email untuk mereset kata sandi</p></span>
-
-            </div>
-        
-            
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
-            <div className="border w-[312px] h-[53px] rounded-lg px-2 pt-4 bg-[#f1f1f1] relative mx-auto">
-
-                <span className="absolute text-xs left-2 top-0">Nomor ponsel atau email</span>
-                <input
-                // value={email}
-                // onChange={(e) => setEmail(e.target.value)}
-                type="text"
-                className="font-bold w-full outline-none h-full bg-[#f1f1f1]"
-                />
-            </div>
-        
-            
-
-            <button
-                className="w-full border mt-5 rounded-lg h-[50px] flex items-center justify-center border-2 border-black absolute bottom-0"
-            >
-                Selanjutnya
-            </button>
-            
-            </form>
-
-            
+  return (
+    <NavBack>
+      <div className="auth page flex flex-col gap-12 font-nunito bottom-16 absolute left-1/2 -translate-x-1/2 top-24">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-xl text-center font-nunitoBold">Verifikasi OTP</h1>
+          <span className="w-full text-center text-md px-10">
+            <p className="font-nunitoLight">Cek email anda</p>
+            <p className="font-nunitoLight">untuk mendapatkan kode OTP</p>
+          </span>
         </div>
 
-    
-    </>
-    )
-}
+        <form onSubmit={handleAction} className="flex flex-col gap-4 w-[312px]">
+          <p className="text-center font-nunitoBold">Kode OTP</p>
 
-export default KodeOTP;
+          <div className="w-full h-[53px] flex justify-between items-center rounded-lg px-2 pt-4 relative">
+            {otp.map((value, index) => (
+              <input
+                key={index}
+                type="text"
+                className="w-[65px] h-[56px] text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 bg-[#f1f1f1] text-lg"
+                maxLength={1}
+                value={value}
+                onChange={(e) => handleChange(e, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                ref={(el:any) => (inputRefs.current[index] = el)}
+              />
+            ))}
+          </div>
+
+          {/* <Link href={"/authentikasi/sandi-baru"}> */}
+            <button
+              onClick={() => alert(`Entered OTP is: ${otp.join("")}`)}
+              className="w-full border mt-5 rounded-lg h-[50px] flex items-center justify-center border-2 border-black"
+            >
+              Reset kata sandi
+            </button>
+          {/* </Link> */}
+        </form>
+
+        <span className="inline-block flex flex-col justify-center items-center">
+          <p className="font-nunitoLight">Belum menerima code?</p>
+          <button className="text-blue-400 font-nunito">Kirim code ulang</button>
+        </span>
+      </div>
+    </NavBack>
+  );
+}

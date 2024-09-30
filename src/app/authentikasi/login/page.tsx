@@ -5,6 +5,7 @@ import NavBack from "../layout/layoutNavigasi"
 import { useRouter } from "next/navigation";
 import postLogin from "@/api/login";
 import axios, { AxiosError } from 'axios';
+import saveToken from "@/cookie/saveToken";
 
 
 
@@ -12,9 +13,10 @@ type LoginResponse = {
     code: number,
     message: string,
     data: {
-        account: string,
-        password: string,
-        token?: string
+        access_token: string,
+        refresh_token: string,
+        expires_in: number,
+        token_type: string
     }
  }
 
@@ -66,6 +68,8 @@ const Login = () => {
 
             setResData(dataResponse);
             console.log(dataResponse.code)
+
+            await saveToken(dataResponse.data)
             
 
 
