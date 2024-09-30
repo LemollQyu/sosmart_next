@@ -1,20 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import authMiddleware from "./middleware/AuthMiddleware";
+import authMiddleware from "./middleware/authMiddleware";
 
+// Middleware utama tanpa config
+export function mainMiddleware(req: NextRequest) {
+  // Logika middleware utama jika diperlukan
 
-export function middleware(req: NextRequest) {
-    const res = NextResponse.next();
-    return res;
+  //   contoh
+  //   const role = roleMiddleware(req, ["/authentikasi/lupa-sandi"]);
+
+  //   if (role) {
+  //     return role;
+  //   }
+
+  return NextResponse.next();
 }
 
-export default authMiddleware(middleware, ['/dashboard'])
-
-// export function middleware(request: NextRequest) {
-//     if (request.nextUrl.pathname.startsWith('/about')) {
-//       return NextResponse.redirect(new URL('/', request.url))
-//     }
-   
-//     if (request.nextUrl.pathname.startsWith('/dashboard')) {
-//       return NextResponse.rewrite(new URL('/dashboard/user', request.url))
-//     }
-//   }
+// Gunakan authMiddleware di sini
+export default authMiddleware(mainMiddleware, ["/"], ["/authentikasi/login"]);
