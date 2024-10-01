@@ -3,7 +3,7 @@ import { CiSearch } from 'react-icons/ci'; // Search icon
 import { CiChat1 } from 'react-icons/ci'; // Chat icon
 import { VscSettings } from 'react-icons/vsc'; // Settings icon
 import { RiNotificationLine } from 'react-icons/ri'; // Notification icon
-import ProductCard from '@/app/product-card/page'; // Update with your ProductCard component
+import ProductCard from '@/app/homepage/product-card/page'; // Update with your ProductCard component
 
 const Pembayaran = () => {
   return (
