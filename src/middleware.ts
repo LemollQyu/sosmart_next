@@ -16,4 +16,4 @@ export function mainMiddleware(req: NextRequest) {
 }
 
 // Gunakan authMiddleware di sini
-export default authMiddleware(mainMiddleware, ["/"], ["/authentikasi/login"]);
+export default authMiddleware(mainMiddleware, ["/"], ["/authentikasi"]);

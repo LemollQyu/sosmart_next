@@ -67,7 +67,9 @@ const Login = () => {
             console.log(dataResponse);
 
             setResData(dataResponse);
+
             console.log(dataResponse.code)
+            console.log(dataResponse.message)
 
             await saveToken(dataResponse.data)
             
@@ -76,15 +78,24 @@ const Login = () => {
         } catch (error: any) {
             console.log(error.response)
             setResErr(error.response);
+            
 
-           console.log(error.response.data.code)
+            // console.log(error.response.data.message.account[0]);
+
+        //    console.log(error.response.data.code)
             
         }
 
         // await router.push("/");
 
+        
+
   
     }
+
+    useEffect(() => {
+        console.log(resErr);
+    }, [resErr])
 
 
     return (
@@ -105,9 +116,13 @@ const Login = () => {
                 type="text"
                 className="font-bold w-full outline-none h-full bg-[#f1f1f1]"
                 />
+                <div className="w-full pt-1">
+                        <p className="text-red-400 text-xs underline">{resErr && resErr.data.message.account[0] !== undefined ? resErr.data.message.account[0] : "" }</p>
+                </div>
             </div>
+            
 
-            <div className="border w-[312px] h-[53px] rounded-lg px-2 pt-4 bg-[#f1f1f1] relative">
+            <div className="border w-[312px] h-[53px] rounded-lg px-2 pt-4 bg-[#f1f1f1] relative mt-2">
                 <span className="absolute text-xs left-2 top-0">Password</span>
                 <input
                 value={password}
@@ -115,9 +130,16 @@ const Login = () => {
                 type="password"
                 className="font-bold w-full h-full bg-[#f1f1f1] outline-none"
                 />
+                <div className="w-full pt-1">
+                        <p className="text-red-400 text-xs underline">{resErr && resErr.data.message.account[0] !== undefined ? resErr.data.message.account[0] : "" }</p>
+                </div>
             </div>
 
-            {/* <span className="text-red-400 text-xs underline">{resErr && resErr.message?.account?.[0] !== undefined ? resErr.message.account[0] : "" }</span> */}
+            <p className="text-red-400 text-xs underline">{resData && resData.message !== undefined ? resData.message : "" }</p>
+
+            
+
+            
 
             <button
             
